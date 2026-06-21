@@ -1,0 +1,193 @@
+<%- include('partials/header') %>
+
+<div class="container" style="padding: 4rem 0; flex: 1;">
+    <div class="animate-fade-in">
+        <!-- Title and CTA -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;">
+            <div>
+                <h1 style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #fff 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Link Dashboard</h1>
+                <p style="color: var(--text-muted); font-size: 1rem;">Monitor, analyze, and manage your shortened URLs.</p>
+            </div>
+            <a href="/createUrl" class="btn btn-primary">
+                <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i> Create New Link
+            </a>
+        </div>
+
+        <% if (locals.urls && locals.urls.length > 0) { %>
+            <!-- Dashboard Summary Metrics -->
+            <% 
+                let totalLinks = urls.length;
+                let totalClicks = urls.reduce((sum, url) => sum + url.visitHistory.length, 0);
+                let avgClicks = totalLinks > 0 ? (totalClicks / totalLinks).toFixed(1) : 0;
+            %>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.25);">
+                        <i data-lucide="link-2" style="width: 22px; height: 22px; color: var(--primary);"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Links</h4>
+                        <p><%= totalLinks %></p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(236, 72, 153, 0.15); border-color: rgba(236, 72, 153, 0.25);">
+                        <i data-lucide="bar-chart-3" style="width: 22px; height: 22px; color: var(--secondary);"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Clicks</h4>
+                        <p><%= totalClicks %></p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.25);">
+                        <i data-lucide="line-chart" style="width: 22px; height: 22px; color: var(--success);"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Avg. Clicks</h4>
+                        <p><%= avgClicks %></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Table Card -->
+            <div class="glass-card" style="padding: 2rem;">
+                <!-- Table Action Controls -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff;">Shortened Links List</h3>
+                    <!-- Search input -->
+                    <div style="max-width: 350px; width: 100%;">
+                        <div class="input-wrapper input-with-icon">
+                            <input type="text" id="dashboardSearch" placeholder="Search links or destinations..." onkeyup="filterLinksTable()">
+                            <i data-lucide="search" style="width: 18px; height: 18px;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="linksTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">S.No</th>
+                                <th>Short Link</th>
+                                <th>Destination URL</th>
+                                <th style="text-align: center;">Clicks</th>
+                                <th>Last Clicked</th>
+                                <th style="text-align: center; width: 150px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% locals.urls.forEach((url, index) => { %>
+                                <% const shortUrl = `http://localhost:3000/url/${url.shortId}`; %>
+                                <tr>
+                                    <td style="color: var(--text-muted); font-weight: 600;"><%= index + 1 %></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <a href="<%= shortUrl %>" target="_blank" style="color: var(--text-secondary); font-family: monospace; font-weight: 700; font-size: 1.05rem;" class="short-link-cell">
+                                                <%= url.shortId %>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="long-link-cell">
+                                        <a href="<%= url.longUrl %>" target="_blank" style="color: var(--text-muted); font-size: 0.9rem;" title="<%= url.longUrl %>">
+                                            <%= url.longUrl %>
+                                        </a>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span class="badge badge-clicks">
+                                            <i data-lucide="mouse-pointer-click" style="width: 12px; height: 12px;"></i>
+                                            <%= url.visitHistory.length %>
+                                        </span>
+                                    </td>
+                                    <td style="font-size: 0.875rem; color: var(--text-muted);">
+                                        <% if (url.visitHistory.length > 0) { %>
+                                            <% const lastVisit = url.visitHistory[url.visitHistory.length - 1].visitTime; %>
+                                            <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                                <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                                                <%= new Date(lastVisit).toLocaleString() %>
+                                            </div>
+                                        <% } else { %>
+                                            <span style="font-style: italic; color: rgba(148, 143, 168, 0.4);">Never</span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; gap: 0.5rem; justify-content: center; align-items: center;">
+                                            <button onclick="copyToClipboard('<%= shortUrl %>')" class="btn btn-outline" style="padding: 0.45rem; border-radius: 0.5rem;" title="Copy to clipboard">
+                                                <i data-lucide="copy" style="width: 15px; height: 15px;"></i>
+                                            </button>
+                                            <a href="<%= shortUrl %>" target="_blank" class="btn btn-outline" style="padding: 0.45rem; border-radius: 0.5rem;" title="Test Redirect">
+                                                <i data-lucide="external-link" style="width: 15px; height: 15px;"></i>
+                                            </a>
+                                            <a href="/url/analysis/<%= url.shortId %>" target="_blank" class="btn btn-outline" style="padding: 0.45rem; border-radius: 0.5rem;" title="View Raw Analytics JSON">
+                                                <i data-lucide="bar-chart-2" style="width: 15px; height: 15px;"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="glass-card text-center" style="padding: 6rem 2rem;">
+                <div style="width: 4.5rem; height: 4.5rem; background: rgba(139, 92, 246, 0.1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    <i data-lucide="link" style="width: 28px; height: 28px;"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">No shortened links found</h3>
+                <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 400px; margin-left: auto; margin-right: auto;">Create your first link to start tracking redirections, clicks, and analytics.</p>
+                <a href="/createUrl" class="btn btn-primary">
+                    <i data-lucide="plus" style="width: 18px; height: 18px;"></i> Create your first link
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        if (typeof showToast === 'function') {
+            showToast('Link copied to clipboard!');
+        } else {
+            alert('Copied to clipboard!');
+        }
+    }).catch(err => {
+        if (typeof showToast === 'function') {
+            showToast('Failed to copy link', 'error');
+        }
+    });
+}
+
+function filterLinksTable() {
+    const input = document.getElementById('dashboardSearch');
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById('linksTable');
+    if (!table) return;
+    
+    const rows = table.getElementsByTagName('tr');
+    
+    // Start loop from 1 to skip table headers
+    for (let i = 1; i < rows.length; i++) {
+        const shortCell = rows[i].querySelector('.short-link-cell');
+        const longCell = rows[i].querySelector('.long-link-cell');
+        
+        let textMatch = false;
+        
+        if (shortCell && shortCell.textContent.toLowerCase().includes(filter)) {
+            textMatch = true;
+        }
+        if (longCell && longCell.textContent.toLowerCase().includes(filter)) {
+            textMatch = true;
+        }
+        
+        if (textMatch) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+</script>
+
+<%- include('partials/footer') %>

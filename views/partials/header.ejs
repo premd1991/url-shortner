@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarpLink - Premium Link Management & Shortener</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">
+                <i data-lucide="link-2" class="logo-icon"></i> WarpLink
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <% if (locals.user) { %>
+                    <a href="/createUrl">Create URL</a>
+                    <a href="/url/allurls">My Dashboard</a>
+                    <a href="/user/logout" class="btn btn-outline" style="padding: 0.5rem 1.25rem;">
+                        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i> Logout
+                    </a>
+                <% } else { %>
+                    <a href="/login">Login</a>
+                    <a href="/signup" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">
+                        Get Started <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+    <main style="flex: 1; display: flex; flex-direction: column;">

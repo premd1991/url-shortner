@@ -1,0 +1,101 @@
+<%- include('partials/header') %>
+
+<div class="container" style="padding: 6rem 0; flex: 1; display: flex; align-items: center; justify-content: center;">
+    <div class="glass-card animate-slide-up" style="max-width: 650px; width: 100%; text-align: center;">
+        <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%); border-radius: 1.25rem; border: 1px solid rgba(139, 92, 246, 0.3); display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); margin-bottom: 1.5rem;">
+            <i data-lucide="link" style="width: 24px; height: 24px;"></i>
+        </div>
+        
+        <h2 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Shorten a Link</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1rem;">Enter your long destination URL below, and we'll craft a lightning-fast shortened version.</p>
+
+        <% if (locals.error) { %>
+            <div class="error-msg" style="text-align: left;">
+                <i data-lucide="alert-circle" style="width: 18px; height: 18px;"></i>
+                <span><%= error %></span>
+            </div>
+        <% } %>
+
+        <form method="post" action="/url">
+            <div class="form-group">
+                <label for="longUrl">Destination URL</label>
+                <div class="input-wrapper input-with-icon">
+                    <input type="url" id="longUrl" name="longUrl" placeholder="https://example.com/some/very/long/path" required>
+                    <i data-lucide="globe" style="width: 20px; height: 20px;"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.9rem;">
+                <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i> Generate Premium Link
+            </button>
+        </form>
+
+        <% if (locals.shortId) { %>
+            <% const shortUrl = `http://localhost:3000/url/${locals.shortId}`; %>
+            <div class="animate-fade-in" style="margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border-color); text-align: left;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); color: var(--success); font-size: 0.75rem; font-weight: 800; padding: 0.25rem 0.75rem; border-radius: 9999px; text-transform: uppercase;">Success</span>
+                    <h3 style="font-size: 1.15rem; font-weight: 700; color: #fff;">Short Link Created</h3>
+                </div>
+                
+                <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 2rem;">
+                    <div style="flex: 1; background: rgba(10, 5, 22, 0.8); padding: 0.95rem 1.25rem; border-radius: 0.85rem; border: 1px solid var(--border-color); font-family: monospace; font-size: 1.05rem; color: var(--text-secondary); overflow-x: auto; white-space: nowrap;">
+                        <%= shortUrl %>
+                    </div>
+                    <button onclick="copyToClipboard('<%= shortUrl %>')" class="btn btn-outline" style="padding: 0.95rem 1.25rem;" id="copyBtn">
+                        <i data-lucide="copy" style="width: 18px; height: 18px;"></i> Copy
+                    </button>
+                </div>
+
+                <!-- QR Code & Quick Actions widget -->
+                <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; background: rgba(20, 11, 38, 0.4); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 1.25rem;">
+                    <div style="background: white; padding: 0.5rem; border-radius: 0.75rem; display: inline-flex; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=<%= encodeURIComponent(shortUrl) %>" alt="Short URL QR Code" style="width: 120px; height: 120px; display: block;">
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;">QR Code Generated</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">Scan to instantly access redirection on mobile devices.</p>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <a href="<%= shortUrl %>" target="_blank" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                                <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> Test Redirection
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        // Show our global success toast!
+        if (typeof showToast === 'function') {
+            showToast('Link copied to clipboard!');
+        } else {
+            alert('Copied to clipboard!');
+        }
+
+        // Add extra visual confirmation inside the button
+        const copyBtn = document.getElementById('copyBtn');
+        if (copyBtn) {
+            const originalHTML = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i data-lucide="check" style="width: 18px; height: 18px; color: var(--success);"></i> Copied';
+            copyBtn.style.borderColor = 'var(--success)';
+            lucide.createIcons();
+            setTimeout(() => {
+                copyBtn.innerHTML = originalHTML;
+                copyBtn.style.borderColor = '';
+                lucide.createIcons();
+            }, 2000);
+        }
+    }).catch(err => {
+        if (typeof showToast === 'function') {
+            showToast('Failed to copy link', 'error');
+        }
+    });
+}
+</script>
+
+<%- include('partials/footer') %>

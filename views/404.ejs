@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<div class="container" style="padding: 6rem 0; flex: 1; display: flex; align-items: center; justify-content: center;">
+    <div class="glass-card animate-slide-up" style="max-width: 550px; width: 100%; text-align: center;">
+        <div style="width: 4.5rem; height: 4.5rem; background: rgba(244, 63, 94, 0.1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--error); margin-bottom: 1.5rem; border: 1px solid rgba(244, 63, 94, 0.25);">
+            <i data-lucide="alert-triangle" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff 0%, #f43f5e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">404 - Not Found</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem;">
+            <%= locals.message || "The page or link you are looking for does not exist or has been moved." %>
+        </p>
+        <a href="/" class="btn btn-primary">
+            <i data-lucide="home" style="width: 18px; height: 18px;"></i> Back to Home
+        </a>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,71 @@
+<%- include('partials/header') %>
+
+<div class="container" style="padding: 6rem 0; flex: 1; display: flex; align-items: center; justify-content: center;">
+    <div class="glass-card animate-slide-up" style="max-width: 480px; width: 100%;">
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+            <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%); border-radius: 1rem; border: 1px solid rgba(139, 92, 246, 0.25); display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                <i data-lucide="shield-check" style="width: 22px; height: 22px;"></i>
+            </div>
+            <h2 style="font-size: 2.15rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Welcome Back</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Enter your credentials to access your dashboard.</p>
+        </div>
+
+        <% if (locals.error) { %>
+            <div class="error-msg" id="errorBanner">
+                <i data-lucide="alert-triangle" style="width: 18px; height: 18px;"></i>
+                <span style="flex: 1;"><%= error %></span>
+                <button type="button" onclick="document.getElementById('errorBanner').remove()" style="background: transparent; border: none; color: inherit; cursor: pointer; display: flex; align-items: center;">
+                    <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+                </button>
+            </div>
+        <% } %>
+
+        <form method="post" action="/user/login">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper input-with-icon">
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    <i data-lucide="mail" style="width: 18px; height: 18px;"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper input-with-icon">
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <i data-lucide="lock" style="width: 18px; height: 18px;"></i>
+                    <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 0.25rem;" id="togglePasswordBtn">
+                        <i data-lucide="eye" style="width: 18px; height: 18px;" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.9rem;">
+                Login to Dashboard <i data-lucide="log-in" style="width: 16px; height: 16px;"></i>
+            </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted);">
+            Don't have an account? <a href="/signup" style="color: var(--text-secondary); font-weight: 700; border-bottom: 1px dashed var(--text-secondary); padding-bottom: 1px;">Sign up free</a>
+        </p>
+    </div>
+</div>
+
+<script>
+function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+    if (!passwordInput || !toggleIcon) return;
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.setAttribute('data-lucide', 'eye-off');
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.setAttribute('data-lucide', 'eye');
+    }
+    lucide.createIcons();
+}
+</script>
+
+<%- include('partials/footer') %>

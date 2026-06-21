@@ -1,0 +1,55 @@
+    </main>
+    
+    <!-- Reusable toast notification container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="/" class="logo" style="font-size: 1.35rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <i data-lucide="link-2" style="width: 20px; height: 20px; color: var(--primary);"></i> WarpLink
+                    </a>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">The premium link manager for creators & developers.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="mailto:support@warplink.example.com">Support</a>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.875rem;">&copy; <%= new Date().getFullYear() %> WarpLink. Made with care.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons & Global Utilities -->
+    <script>
+        lucide.createIcons();
+
+        // Global Toast Notification function
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            
+            const iconName = type === 'success' ? 'check-circle' : 'alert-circle';
+            toast.innerHTML = `
+                <i data-lucide="${iconName}" style="width: 18px; height: 18px; color: ${type === 'success' ? 'var(--success)' : 'var(--error)'}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            lucide.createIcons(); // render icon in new toast
+
+            setTimeout(() => {
+                toast.style.animation = 'none';
+                toast.offsetHeight; // trigger reflow
+                toast.style.animation = 'toastIn 0.3s ease reverse forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

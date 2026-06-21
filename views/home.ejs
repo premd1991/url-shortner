@@ -1,0 +1,106 @@
+<%- include('partials/header') %>
+
+<section class="hero animate-fade-in">
+    <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+        <h1 class="animate-slide-up" style="margin-top: 1rem;">
+            Shorten Your <span>Links</span>,<br>Expand Your Reach
+        </h1>
+        <p class="animate-slide-up" style="animation-delay: 0.1s;">
+            The premium URL shortener for modern creators, developers, and businesses. Track clicks, analyze performance, and brand your presence with style.
+        </p>
+        
+        <div class="animate-slide-up" style="display: flex; gap: 1.25rem; justify-content: center; margin-bottom: 4.5rem; animation-delay: 0.2s;">
+            <a href="/createUrl" class="btn btn-primary">
+                <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i> Get Started Free
+            </a>
+            <a href="#features" class="btn btn-outline">
+                Explore Features <i data-lucide="chevron-down" style="width: 18px; height: 18px;"></i>
+            </a>
+        </div>
+
+        <div class="glass-card animate-slide-up" style="max-width: 950px; padding: 0.75rem; border-radius: 2rem; box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 50px rgba(139, 92, 246, 0.15); animation-delay: 0.3s; position: relative;">
+            <div style="position: absolute; -top: 15px; -left: 15px; background: var(--accent-gradient); padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.35rem; box-shadow: 0 4px 15px rgba(217,70,239,0.4);">
+                <i data-lucide="radio" style="width: 14px; height: 14px; animation: pulse 1.5s infinite;"></i> Premium Dashboard Preview
+            </div>
+            <img src="/images/hero.png" alt="Hero Illustration" style="width: 100%; border-radius: 1.5rem; display: block; filter: brightness(0.9) contrast(1.05);">
+        </div>
+    </div>
+</section>
+
+<!-- Stats Counters Section -->
+<section style="padding: 4rem 0 2rem;">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i data-lucide="activity" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="stat-info">
+                    <h4>Redirections</h4>
+                    <p>99.99%</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i data-lucide="mouse-pointer-click" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="stat-info">
+                    <h4>Total Clicks Tracked</h4>
+                    <p>1.2M+</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i data-lucide="link" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="stat-info">
+                    <h4>Links Shortened</h4>
+                    <p>450K+</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i data-lucide="shield-check" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="stat-info">
+                    <h4>Security Status</h4>
+                    <p>Active</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Section -->
+<section id="features" class="container" style="padding: 5rem 0 8rem;">
+    <div class="text-center" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 2.75rem; font-weight: 900; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Why choose WarpLink?</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Everything you need to manage, optimize, and brand your links efficiently in a single hub.</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i data-lucide="zap" style="width: 24px; height: 24px;"></i>
+            </div>
+            <h3>Lightning Redirection</h3>
+            <p>Redirections occur globally at edge servers in milliseconds. Users won't experience any delay when clicking your custom URLs.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i data-lucide="bar-chart-3" style="width: 24px; height: 24px;"></i>
+            </div>
+            <h3>Granular Analytics</h3>
+            <p>Understand your audience with stats reporting. Track exact click counts, times, and client metrics to refine your product reach.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i data-lucide="fingerprint" style="width: 24px; height: 24px;"></i>
+            </div>
+            <h3>Branded Profiles</h3>
+            <p>Generate highly readable short links that build trust. Customizable short identifiers make links secure and memorable.</p>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
