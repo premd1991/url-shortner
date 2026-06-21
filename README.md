@@ -1,75 +1,71 @@
-# WarpLink 🌌
+# WarpLink
 
-WarpLink is a premium, lightning-fast URL shortener and link management dashboard. Crafted with modern glassmorphic aesthetics, neon violet/pink color harmonies, and smooth animations, WarpLink allows users to shorten URLs, monitor redirection histories, and analyze performance metrics in style.
+## Motivation
+Based on the requests that I got to demonstrate a production-grade full-stack URL shortener and link management system built on Node.js, Express, and EJS.
 
----
-
-## Features 🚀
-
-- **Lightning Fast Redirections**: Globally fast redirection using unique short identifiers.
-- **Granular Analytics**: Track exact click counts, timestamps, and visit histories.
-- **Dynamic Dashboard**: Searchable and filterable dashboard mapping short links to destination URLs.
-- **Embedded QR Code Generator**: Instantly generate QR codes for generated short links for mobile convenience.
-- **Stateless Authentication**: Robust security powered by JWTs (JSON Web Tokens) stored securely in HttpOnly cookies.
-- **Stunning UI/UX**: Designed with dark mode, glowing accents, blur-glass cards, and custom micro-animations.
-- **Resilient Error Pages**: Polished 404 handling for invalid or expired short URLs.
+I decided to create WarpLink—a Node.js (Express, EJS, MongoDB, Mongoose) based link publishing web application. The goal is to help full-stack developers learn clean architecture, cookie-based stateless authentication (using JWT), custom routing, premium glassmorphic visual layouts, and strict security protocols.
 
 ---
 
-## Technology Stack 🛠️
+## Introduction
+It's a good practice to keep a simple and organized architecture. There are various techniques, design patterns, and folder structures that are used by developers for their projects, and it's perfectly fine to have your own unique architecture.
 
-- **Backend**: Node.js & Express
-- **Database**: MongoDB (via Mongoose)
-- **View Engine**: EJS (Embedded JavaScript)
-- **Styling**: Vanilla CSS (custom variables, keyframe animations, glassmorphism)
-- **Security**: JWT & bcryptjs
-
----
-
-## Installation & Setup 💻
-
-### 1. Prerequisites
-Ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v16+)
-- [MongoDB](https://www.mongodb.com/) (running locally on port `27017` or configured via `connect.js`)
-
-### 2. Clone & Install Dependencies
-Navigate to the project directory and install required npm packages:
-```bash
-npm install
-```
-
-### 3. Running the Server
-To start the server in development mode with hot-reloading (via nodemon):
-```bash
-npm run dev
-```
-
-The application will start running at:
-👉 **[http://localhost:3000](http://localhost:3000)**
+The end goal of the usage of any design or architectural pattern is usually the same:
+* **Adding a new requirement should be easy.** (Modular API routers and controllers make extension seamless).
+* **Completing any new task/requirement should not break any existing features.** (Auth guards, verification middlewares, and decoupled controllers keep systems independent).
+* **It should enable individual development & deployment of features.** (Separating backend route controllers from views layout templates ensures parallel development).
+* **Components/Modules should be testable without dependencies.** (Database models and helper utilities can be isolated for mock validations).
 
 ---
 
-## Project Structure 📁
+## Screenshots
+### Web Client Interface (Glassmorphic Theme)
 
-```text
-├── connect.js           # Database connection configuration
-├── index.js             # Main server logic & global middlewares
-├── package.json         # Scripts and project dependencies
-├── controllers/         # Request handling logic (URLs, Users)
-├── models/              # Mongoose database schemas (URL, User)
-├── routes/              # Express routers (URL routes, User routes)
-├── middlewares/         # Route protection and role authorization middlewares
-├── public/              # Static assets (CSS, client JS, images)
-│   ├── css/style.css    # Premium CSS styling
-│   └── images/hero.png  # Hero assets
-├── views/               # EJS templates
-│   ├── partials/        # Global layout elements (header, footer)
-│   └── 404.ejs          # Stunning custom error page
-└── utils/               # Helper modules
-```
+| Dashboard View | Create Link View |
+| :---: | :---: |
+| ![WarpLink Dashboard](public/images/hero.png) | ![WarpLink Create Link](public/images/hero.png) |
 
 ---
 
-## License 📄
-This project is licensed under the ISC License.
+## Languages / Frameworks Used
+* **Node.js & Express 5** (API Backend Server)
+* **EJS (Embedded JavaScript)** (Template Render Engine)
+* **Mongoose & MongoDB** (Database Schema & Queries)
+* **JWT (JSON Web Tokens)** (HttpOnly Secure Session Cookies)
+* **Bcrypt.js** (Secure Password Hashing)
+* **Vanilla CSS** (Futuristic Glassmorphic Theme & Keyframe Animations)
+
+---
+
+## How to run the project ?
+1. **Clone the project:**
+   ```bash
+   git clone https://github.com/premd1991/url-shortner.git
+   cd url-shortner
+   ```
+2. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Start the Database:**
+   Ensure MongoDB is running locally on port `27017` (configured in `connect.js`).
+4. **Start the Server:**
+   ```bash
+   npm run dev
+   ```
+   The application will start running at:
+   👉 **[http://localhost:3000](http://localhost:3000)**
+
+---
+
+## Having trouble ?
+If you are having trouble with this project or if you find any bugs, do open a new issue and describe the problem.
+Alternatively, you can drop me a mail @ praveen.dangwal1991@gmail.com.
+
+---
+
+## Spread the word!
+Liked the project? Just give it a star ⭐️ and spread the word!
+
+## Credits
+© Praveen Dangwal | 2026
