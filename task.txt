@@ -1,0 +1,30 @@
+1. post - /url - create new short id
+
+2. get - /url/:shortid - redirect to long url
+
+3. get - /url/analysis/:shortid - total clicks
+
+
+user authenication-
+
+1. statefull
+    - state maintain on server
+    - client depends on server
+
+2. stateless
+    - no state maintain
+    - client does not depend on server
+    - JWT (JSON Web Token)
+
+Ways to Sent JWT-
+1. cookies (client is browser)
+2. Headers (authorizarion)
+3. response (response send by server)
+
+
+
+user -> short id
+role -> USER
+
+admin -> shortid , dashboard
+role -> ADMIN
